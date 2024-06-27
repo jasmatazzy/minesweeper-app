@@ -1,13 +1,27 @@
 {
     "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "strict": true,
         "esModuleInterop": true,
-        "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "jsx": "react",
+        "lib": ["ESNext", "DOM"],
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "skipLibCheck": true,
+        "sourceMap": true,
+        "strict": true,
+        "target": "ESNext",
     },
+    "exclude": ["node_modules"],
     "include": ["src"],
-    "exclude": ["node_modules"]
 }
+
+// compilerOptions
+// esModuleInterop — the flag fixes default and namespace imports from CommonJS to TS
+// exclude — this option excludes libs from typechecking and transpiling; however code is still checked against typedefs provided by libs.
+// jsx — tells TS how to treat JSX files
+// lib — this option tells TS which libraries will exist in your target environment, so TS implicitly imports their types.
+// module — the option tells TS how to transpile ES6 imports and exports; esnext leaves them unchanged.
+// moduleResolution — historically TS used to resolve modules in other way than Node.js, so this must be set to node
+// sourceMap — enables TS emitting source maps; webpack can be configured to ignore them in production
+// strict — enables all TS type checks
+// target — configures target ES version which depends on your users
