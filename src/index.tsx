@@ -1,7 +1,20 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import {createRoot} from "react-dom/client";
+import './index.css';
+import 'core-js/';
+import Main from "./components/Main";
+
+
+const container = document.getElementById("app-root")!;
+const root = createRoot(container);
 
 const App: React.FC = () => {
-  return <div>Hello MineSweeper</div>;
+  return <div>
+    <div>Hello World!</div>
+    <div>
+     {<Main />}
+    </div>
+  </div>;
 };
-ReactDOM.render(<App />, document.getElementById("root"));
+
+root.render(<App />);
