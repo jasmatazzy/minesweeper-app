@@ -5,7 +5,24 @@ const Main = (): JSX.Element  => {
   return (
     <div>
       <div>I Guess This Is Minesweeper</div>
-      <Square />
+      <div className='board'
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "1px",
+          width: "15vw",
+        }}
+      >
+        <Square />
+        <Square />
+        <Square />
+        <Square />
+        <Square />
+        <Square />
+        <Square />
+        <Square />
+        <Square />
+      </div>
     </div>
   )
 }
