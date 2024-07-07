@@ -9,7 +9,7 @@ const Square = () => {
         justifyContent: "center",
         alignItems: "center",
         boxSizing: "border-box",
-        border: "1px solid black",
+        // border: "1px solid black",
       }}
     >
       <button
@@ -17,7 +17,7 @@ const Square = () => {
         >
         <span className="shadow"></span>
         <span className="edge"></span>
-        <span className="front">💣❓</span>
+        <span className="front"></span>
       </button>
     </div>
   );
