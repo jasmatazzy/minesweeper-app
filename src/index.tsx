@@ -9,7 +9,7 @@ const root = createRoot(container);
 
 const App: React.FC = () => {
   return <div>
-    <div>Hello World!</div>
+    <div>💣🧹</div>
     <div>
      {<Main />}
     </div>
