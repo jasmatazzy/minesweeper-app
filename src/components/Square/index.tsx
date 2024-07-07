@@ -1,7 +1,14 @@
-import React from "react";
+import React, { PropsWithChildren, useState } from "react";
 import "./style.css";
 
-const Square = () => {
+const Square = (props: PropsWithChildren<any>) => {
+
+  const { randomNumber, square_id, isAMineSquare } = props;
+
+  const handleClick = () => {
+    console.log(`Square ${square_id} clicked, and it is ${ isAMineSquare ? "a mine square" : "not a mine square"}`);
+  };
+
   return (
     <div
       style={{
@@ -9,15 +16,16 @@ const Square = () => {
         justifyContent: "center",
         alignItems: "center",
         boxSizing: "border-box",
-        // border: "1px solid black",
       }}
     >
       <button
-        className="pushable button"
-        >
-        <span className="shadow"></span>
-        <span className="edge"></span>
-        <span className="front"></span>
+        onClick={() => {
+          handleClick();
+        }}
+        disabled={props.isGameStarted}
+      >
+        {<span>{!isAMineSquare ? square_id : `💣`}</span>}
+        {<br />}
       </button>
     </div>
   );
