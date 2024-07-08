@@ -3,7 +3,7 @@ import "./style.css";
 
 const Square = (props: PropsWithChildren<any>) => {
 
-  const { randomNumber, square_id, isAMineSquare } = props;
+  const { square_id, isAMineSquare, numberOfAdjacentMines} = props;
 
   const handleClick = () => {
     console.log(`Square ${square_id} clicked, and it is ${ isAMineSquare ? "a mine square" : "not a mine square"}`);
@@ -24,7 +24,7 @@ const Square = (props: PropsWithChildren<any>) => {
         }}
         disabled={props.isGameStarted}
       >
-        {<span>{!isAMineSquare ? square_id : `💣`}</span>}
+        {<span>{!isAMineSquare ? numberOfAdjacentMines : `💣`}</span>}
         {<br />}
       </button>
     </div>

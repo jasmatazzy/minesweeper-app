@@ -1,35 +1,24 @@
-import React, {
-  useState,
-  useEffect,
-  PropsWithChildren,
-  ChangeEvent,
-  SetStateAction,
-} from "react";
+import React, { useState, ChangeEvent } from "react";
 import Row from "../../components/Row/index";
 import Square from "../../components/Square/index";
 
 const Board = () => {
-
   const [isGameStarted, setIsGameStarted] = useState(false);
-  const [isFirstSquare, setIsFirstSquare] = useState(true);
   const [mineSquareArray, setMineSquareArray] = useState<string[]>([]);
+  const [adjacentMinesArray, setAdjacentMinesArray] = useState<string[]>([]);
   const [numOfRows, setNumOfRows] = useState(10);
   const [numOfColumns, setNumOfColumns] = useState(10);
   const [numOfMines, setNumOfMines] = useState(
     Math.floor(numOfRows * numOfColumns * 0.2)
   );
-  const [num_of_flags, setNumOfFlags] = useState(0);
   const totalNumOfSquares = numOfRows * numOfColumns;
 
-  const autoAdjustMines = (
-    numOfRows: number,
-    numOfColumns: number,
-  ) => {
+  const autoAdjustMines = (numOfRows: number, numOfColumns: number) => {
     if (numOfMines > numOfRows * numOfColumns) {
       setNumOfMines(Math.floor(numOfRows * numOfColumns * 0.2));
     }
     setNumOfMines(Math.floor(numOfRows * numOfColumns * 0.2));
-  }
+  };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
@@ -55,18 +44,15 @@ const Board = () => {
       const randomSquareId: string = `${Math.floor(
         Math.random() * numOfRows
       )}.${Math.floor(Math.random() * numOfColumns)}`;
-      // if (!squaresWithMinesArray.includes(randomSquareId)) {
-      //   squaresWithMinesArray.push(randomSquareId);
-      //   console.log(`Mines so far: ${squaresWithMinesArray}`);
-      // }
-      squaresWithMinesArray.push(randomSquareId);
-      console.log(`Mines so far: ${squaresWithMinesArray}`);
+      if (!squaresWithMinesArray.includes(randomSquareId)) {
+        squaresWithMinesArray.push(randomSquareId);
+      }
     }
     setMineSquareArray(squaresWithMinesArray);
-    return squaresWithMinesArray;
-  };
+  }
 
-  const isAMineSquare = (i:number,j:number) => mineSquareArray.includes(`${i}.${j}`)
+  const isAMineSquare = (i: number, j: number) =>
+    mineSquareArray.includes(`${i}.${j}`);
 
   return (
     <div>
@@ -80,8 +66,13 @@ const Board = () => {
         <button
           onClick={() => {
             setIsGameStarted(!isGameStarted);
-            {!isGameStarted && randomizedSquaresWithMines(numOfRows, numOfColumns, numOfMines)}
-            {isGameStarted && randomizedSquaresWithMines(0,0,0)}
+            {
+              !isGameStarted &&
+                randomizedSquaresWithMines(numOfRows, numOfColumns, numOfMines);
+            }
+            {
+              isGameStarted && randomizedSquaresWithMines(0, 0, 0);
+            }
           }}
           style={{
             marginBottom: "10px",
@@ -144,9 +135,10 @@ const Board = () => {
               <Square
                 key={j}
                 randomNumber={Math.floor(Math.random() * 8) + 1}
+                row_id={i}
+                column_id={j}
                 square_id={`${i}.${j}`}
-                isAMineSquare={isAMineSquare(i,j)}
-                countOfMineNeighbors={0}
+                isAMineSquare={isAMineSquare(i, j)}
               />
             ))}
           </Row>
