@@ -1,149 +1,80 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, useEffect } from "react";
 import Row from "../../components/Row/index";
 import Square from "../../components/Square/index";
+import UserConfigOptions from "../UserConfigOptions";
+
+// 1. main object of board square state
+// 2. individual squares should know if they are opened or closed; a mine or not; count of adjacent mine neighbors (provided by mines)
+// 3. mined squares should be randomly placed, and should notify all neighbors of their presence
+// 4. squares without mines should check the notification array for mines, and count the number of times they are notified
+// 5. Squares touching 0 mines should automatically open all non-mine neighbors
+// 6. If a square is clicked, and it is a mine, the game is over
+// 7. If a square is open and contains a number that equals the number of mines touching it, all non-open neighbors should be opened
+
+// Needed state:
+// 1. isGameStarted
+// 2. numOfRows
+// 3. numOfColumns
+// 4. numOfMines
+// 5. totalNumOfSquares
+// 6. squares and their specific states including:
+//    - isAMineSquare
+//    - isSquareOpen
+//    - numberOfAdjacentMines
+//    - square_id
+//    - neighbors
+//    - openNeighbors
 
 const Board = () => {
   const [isGameStarted, setIsGameStarted] = useState(false);
-  const [mineSquareArray, setMineSquareArray] = useState<string[]>([]);
-  const [adjacentMinesArray, setAdjacentMinesArray] = useState<string[]>([]);
-  const [numOfRows, setNumOfRows] = useState(10);
-  const [numOfColumns, setNumOfColumns] = useState(10);
+  const [numOfRows, setNumOfRows] = useState(5);
+  const [numOfColumns, setNumOfColumns] = useState(5);
   const [numOfMines, setNumOfMines] = useState(
-    Math.floor(numOfRows * numOfColumns * 0.2)
+    Math.fround(numOfRows * numOfColumns * 0.2)
   );
-  const totalNumOfSquares = numOfRows * numOfColumns;
 
-  const autoAdjustMines = (numOfRows: number, numOfColumns: number) => {
-    if (numOfMines > numOfRows * numOfColumns) {
-      setNumOfMines(Math.floor(numOfRows * numOfColumns * 0.2));
-    }
-    setNumOfMines(Math.floor(numOfRows * numOfColumns * 0.2));
-  };
+  const numOfSquares = numOfRows * numOfColumns;
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = event.target;
-    if (name === "rows") {
-      setNumOfRows(Number(value));
-    } else if (name === "columns") {
-      setNumOfColumns(Number(value));
-    } else if (name === "mines") {
-      setNumOfMines(Number(value));
+  useEffect (()=>{
+    const mineCount = Number((numOfSquares * 0.2).toFixed(0));
+    if (numOfMines > numOfSquares) {
+      setNumOfMines(mineCount)
+      alert("Number of mines cannot exceed the total number of squares")
     }
-    if (name !== "mines") {
-      autoAdjustMines(Number(value), numOfColumns);
-    }
-  };
 
-  const randomizedSquaresWithMines = (
-    numOfRows: number,
-    numOfColumns: number,
-    numOfMines: number
-  ) => {
-    const squaresWithMinesArray: string[] = [];
-    while (squaresWithMinesArray.length < numOfMines) {
-      const randomSquareId: string = `${Math.floor(
-        Math.random() * numOfRows
-      )}.${Math.floor(Math.random() * numOfColumns)}`;
-      if (!squaresWithMinesArray.includes(randomSquareId)) {
-        squaresWithMinesArray.push(randomSquareId);
-      }
-    }
-    setMineSquareArray(squaresWithMinesArray);
-  }
-
-  const isAMineSquare = (i: number, j: number) =>
-    mineSquareArray.includes(`${i}.${j}`);
+  },[numOfRows, numOfColumns, isGameStarted])
 
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          marginBottom: "20px",
-        }}
-      >
-        <button
-          onClick={() => {
-            setIsGameStarted(!isGameStarted);
-            {
-              !isGameStarted &&
-                randomizedSquaresWithMines(numOfRows, numOfColumns, numOfMines);
-            }
-            {
-              isGameStarted && randomizedSquaresWithMines(0, 0, 0);
-            }
-          }}
-          style={{
-            marginBottom: "10px",
-            borderRadius: "5px",
-            padding: "5px",
-            backgroundColor:
-              isGameStarted && numOfColumns > 0 && numOfRows > 0
-                ? "red"
-                : "green",
-            color: "white",
-            width: "100px",
-          }}
-        >
-          {isGameStarted ? "Start Over" : "Start"}
-        </button>
-        <div>
-          <label>Rows: </label>
-          <input
-            type="number"
-            name="rows"
-            value={numOfRows}
-            onChange={handleInputChange}
-            readOnly={isGameStarted}
-          />
-        </div>
-        <div>
-          <label>Columns: </label>
-          <input
-            type="number"
-            name="columns"
-            value={numOfColumns}
-            onChange={handleInputChange}
-            readOnly={isGameStarted}
-          />
-        </div>
-        <div>
-          <label>Total Mines: </label>
-          <input
-            type="number"
-            name="mines"
-            value={numOfMines}
-            onChange={handleInputChange}
-            readOnly={isGameStarted}
-          />
-          <label>
-            {" "}
-            <br /> Total Squares: {totalNumOfSquares}
-          </label>
-        </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        {Array.from({ length: numOfRows }).map((_, i) => (
-          <Row key={i}>
-            {Array.from({ length: numOfColumns }).map((_, j) => (
-              <Square
-                key={j}
-                randomNumber={Math.floor(Math.random() * 8) + 1}
-                row_id={i}
-                column_id={j}
-                square_id={`${i}.${j}`}
-                isAMineSquare={isAMineSquare(i, j)}
-              />
-            ))}
+      <UserConfigOptions
+        isGameStarted={isGameStarted}
+        numOfRows={numOfRows}
+        numOfColumns={numOfColumns}
+        numOfMines={numOfMines}
+        numOfSquares={numOfSquares}
+        setIsGameStarted={setIsGameStarted}
+        setNumOfMines={setNumOfMines}
+        setNumOfRows={setNumOfRows}
+        setNumOfColumns={setNumOfColumns}
+      />
+      {Array.from({ length: numOfRows }).map((_, rowIndex) => {
+        return (
+          <Row key={rowIndex}>
+            {Array.from({ length: numOfColumns }).map((_, colIndex) => {
+              return (
+                <Square
+                  key={colIndex + 1}
+                  columnId={colIndex + 1}
+                  isGameStarted={isGameStarted}
+                  numOfRows={numOfRows}
+                  numOfColumns={numOfColumns}
+                  rowId={rowIndex + 1}
+                />
+              );
+            })}
           </Row>
-        ))}
-      </div>
+        );
+      })}
     </div>
   );
 };

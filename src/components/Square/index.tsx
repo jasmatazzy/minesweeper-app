@@ -3,10 +3,10 @@ import "./style.css";
 
 const Square = (props: PropsWithChildren<any>) => {
 
-  const { square_id, isAMineSquare, numberOfAdjacentMines} = props;
+  const { rowId, columnId, isAMineSquare, numberOfAdjacentMines} = props;
 
   const handleClick = () => {
-    console.log(`Square ${square_id} clicked, and it is ${ isAMineSquare ? "a mine square" : "not a mine square"}`);
+    console.log(`Square ${rowId}, ${columnId} clicked, and it is ${ isAMineSquare ? "a mine square" : "not a mine square"}`);
   };
 
   return (
@@ -22,7 +22,6 @@ const Square = (props: PropsWithChildren<any>) => {
         onClick={() => {
           handleClick();
         }}
-        disabled={props.isGameStarted}
       >
         {<span>{!isAMineSquare ? numberOfAdjacentMines : `💣`}</span>}
         {<br />}
