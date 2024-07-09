@@ -1,13 +1,18 @@
-import React, { PropsWithChildren, useState } from "react";
+import React from "react";
 import "./style.css";
 
-const Square = (props: PropsWithChildren<any>) => {
-
-  const { rowId, columnId, isAMineSquare, numberOfAdjacentMines} = props;
-
-  const handleClick = () => {
-    console.log(`Square ${rowId}, ${columnId} clicked, and it is ${ isAMineSquare ? "a mine square" : "not a mine square"}`);
+interface SquareProps {
+  squareState: {
+    isAMineSquare: boolean;
+    isFlagged: boolean;
+    isSquareOpen: boolean;
+    numOfAdjacentMines?: number;
+    squareId: object;
   };
+}
+const Square: React.FC<SquareProps> = (props) => {
+  const {squareState} = props;
+
 
   return (
     <div
@@ -18,12 +23,8 @@ const Square = (props: PropsWithChildren<any>) => {
         boxSizing: "border-box",
       }}
     >
-      <button
-        onClick={() => {
-          handleClick();
-        }}
-      >
-        {<span>{!isAMineSquare ? numberOfAdjacentMines : `💣`}</span>}
+      <button onClick={() => {}}>
+        {squareState.isAMineSquare ? <span>💣</span> : <span>😇</span> }
         {<br />}
       </button>
     </div>
