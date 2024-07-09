@@ -2,25 +2,25 @@ import React from "react";
 
 interface UserConfigOptionsProps {
   isGameStarted: boolean;
-  numOfColumns: number;
-  numOfMines: number;
-  numOfRows: number;
-  numOfSquares: number;
+  numberOfMines: number;
+  numberOfRows: number;
+  numberOfSquares: number;
+  totalSquares: number;
   setIsGameStarted: (value: boolean) => void;
-  setNumOfColumns: (value: number) => void;
-  setNumOfMines: (value: number) => void;
-  setNumOfRows: (value: number) => void;
+  setNumberOfSquares: (value: number) => void;
+  setNumberOfMines: (value: number) => void;
+  setNumberOfRows: (value: number) => void;
 }
 const UserConfigOptions: React.FC<UserConfigOptionsProps> = ({
   isGameStarted,
-  numOfColumns,
-  numOfMines,
-  numOfRows,
-  numOfSquares,
+  numberOfMines,
+  numberOfRows,
+  numberOfSquares,
+  totalSquares,
   setIsGameStarted,
-  setNumOfColumns,
-  setNumOfMines,
-  setNumOfRows,
+  setNumberOfSquares,
+  setNumberOfMines,
+  setNumberOfRows,
 }) => {
   return (
     <div>
@@ -51,9 +51,9 @@ const UserConfigOptions: React.FC<UserConfigOptionsProps> = ({
           <input
             type="number"
             name="rows"
-            value={numOfRows || 0}
+            value={numberOfRows || 0}
             onChange={(e) => {
-              setNumOfRows(parseInt(e.target.value));
+              setNumberOfRows(parseInt(e.target.value));
             }}
           />
         </div>
@@ -62,9 +62,9 @@ const UserConfigOptions: React.FC<UserConfigOptionsProps> = ({
           <input
             type="number"
             name="columns"
-            value={numOfColumns || 0}
+            value={numberOfSquares || 0}
             onChange={(e) => {
-              setNumOfColumns(parseInt(e.target.value));
+              setNumberOfSquares(parseInt(e.target.value));
             }}
           />
         </div>
@@ -73,14 +73,14 @@ const UserConfigOptions: React.FC<UserConfigOptionsProps> = ({
           <input
             type="number"
             name="mines"
-            value={numOfMines || 0}
+            value={numberOfMines || 0}
             onChange={(e) => {
-              setNumOfMines(parseInt(e.target.value));
+              setNumberOfMines(parseInt(e.target.value));
             }}
           />
           <label>
             {" "}
-            <br /> Total Squares: {numOfSquares || `You need at least 1 row and 1 column to start the game`}
+            <br /> Total Squares: {numberOfSquares || `You need at least 1 row and 1 column to start the game`}
           </label>
         </div>
       </div>

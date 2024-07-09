@@ -6,7 +6,8 @@ interface SquareProps {
     isAMineSquare: boolean;
     isFlagged: boolean;
     isSquareOpen: boolean;
-    numOfAdjacentMines?: number;
+    neighbors: object;
+    numberOfAdjacentMines: number;
     squareId: object;
   };
 }
