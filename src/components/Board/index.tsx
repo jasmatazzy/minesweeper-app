@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Row from "../../components/Row/index";
 import Square from "../../components/Square/index";
 import UserConfigOptions from "../UserConfigOptions";
-import { is } from "core-js/core/object";
 
 // 1. main object of board square state
 // 2. individual squares should know if they are opened or closed; a mine or not; count of adjacent mine neighbors (provided by mines)
