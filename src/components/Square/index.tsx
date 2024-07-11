@@ -1,19 +1,21 @@
-import React from "react";
+import React, { FC } from "react";
 import "./style.css";
 
 interface SquareProps {
-  squareState: {
-    isAMineSquare: boolean;
-    isFlagged: boolean;
-    isSquareOpen: boolean;
-    neighbors: object;
-    numberOfAdjacentMines: number;
-    squareId: object;
-  };
+  isAMineSquare: boolean;
+  isFlagged: boolean;
+  isSquareOpen: boolean;
+  numberOfAdjacentMines: number|null;
+  squareId: object;
 }
-const Square: React.FC<SquareProps> = (props) => {
-  const {squareState} = props;
-
+const Square: FC<SquareProps> = (props) => {
+  const {
+    isAMineSquare,
+    isFlagged,
+    isSquareOpen,
+    numberOfAdjacentMines,
+    squareId,
+  } = props;
 
   return (
     <div
@@ -25,7 +27,7 @@ const Square: React.FC<SquareProps> = (props) => {
       }}
     >
       <button onClick={() => {}}>
-        {squareState.isAMineSquare ? <span>💣</span> : <span>😇</span> }
+        {isAMineSquare ? <span>💣</span> : <span>{numberOfAdjacentMines}</span>}
         {<br />}
       </button>
     </div>
